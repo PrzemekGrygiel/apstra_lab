@@ -1,10 +1,125 @@
 #!/bin/bash
 
+# images versions
 VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
 VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
-#TBC
-APSTRA_ZTP=$PWD/images/aos_server_3.3.0c-26.qcow2
+APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
+
+echo "Start cleaning old configuration "
+virsh destroy spine1-re   
+virsh destroy spine1-pfe  
+virsh destroy spine2-re   
+virsh destroy spine2-pfe  
+virsh destroy leaf1-re    
+virsh destroy leaf1-pfe   
+virsh destroy leaf2-re    
+virsh destroy leaf2-pfe   
+virsh destroy leaf3-re    
+virsh destroy leaf3-pfe   
+virsh destroy leaf4-re    
+virsh destroy leaf4-pfe   
+virsh destroy aos-ztp     
+virsh destroy aos-srv     
+ 
+virsh undefine spine1-re   
+virsh undefine spine1-pfe  
+virsh undefine spine2-re   
+virsh undefine spine2-pfe  
+virsh undefine leaf1-re    
+virsh undefine leaf1-pfe   
+virsh undefine leaf2-re    
+virsh undefine leaf2-pfe   
+virsh undefine leaf3-re    
+virsh undefine leaf3-pfe   
+virsh undefine leaf4-re    
+virsh undefine leaf4-pfe   
+virsh undefine aos-ztp     
+virsh undefine aos-srv     
+
+ifconfig mgmt down
+ifconfig spine1-in down
+ifconfig spine2-in down
+ifconfig leaf1-int down
+ifconfig leaf2-int down
+ifconfig leaf3-int down
+ifconfig leaf4-int down
+ifconfig leaf1-0 down
+ifconfig leaf1-1 down
+ifconfig leaf1-2 down
+ifconfig leaf1-3 down
+ifconfig leaf2-0 down
+ifconfig leaf2-1 down
+ifconfig leaf2-2 down
+ifconfig leaf2-3 down
+ifconfig leaf3-0 down
+ifconfig leaf3-1 down
+ifconfig leaf3-2 down
+ifconfig leaf3-3 down
+ifconfig leaf4-0 down
+ifconfig leaf4-1 down
+ifconfig leaf4-2 down
+ifconfig leaf4-3 down
+ifconfig s1-l1 down
+ifconfig s1-l2 down
+ifconfig s1-l3 down
+ifconfig s1-l4 down
+ifconfig s2-l1 down
+ifconfig s2-l2 down
+ifconfig s2-l3 down
+ifconfig s2-l4 down
+ifconfig s3-l1 down
+ifconfig s3-l2 down
+ifconfig s3-l3 down
+ifconfig s3-l4 down
+ifconfig s4-l1 down
+ifconfig s4-l2 down
+ifconfig s4-l3 down
+ifconfig s4-l4 down
+
+brctl delbr mgmt
+brctl delbr spine1-in
+brctl delbr spine2-in
+brctl delbr leaf1-int
+brctl delbr leaf2-int
+brctl delbr leaf3-int
+brctl delbr leaf4-int
+brctl delbr leaf1-0
+brctl delbr leaf1-1
+brctl delbr leaf1-2
+brctl delbr leaf1-3
+brctl delbr leaf2-0
+brctl delbr leaf2-1
+brctl delbr leaf2-2
+brctl delbr leaf2-3
+brctl delbr leaf3-0
+brctl delbr leaf3-1
+brctl delbr leaf3-2
+brctl delbr leaf3-3
+brctl delbr leaf4-0
+brctl delbr leaf4-1
+brctl delbr leaf4-2
+brctl delbr leaf4-3
+brctl delbr s1-l1
+brctl delbr s1-l2
+brctl delbr s1-l3
+brctl delbr s1-l4
+brctl delbr s2-l1
+brctl delbr s2-l2
+brctl delbr s2-l3
+brctl delbr s2-l4
+brctl delbr s3-l1
+brctl delbr s3-l2
+brctl delbr s3-l3
+brctl delbr s3-l4
+brctl delbr s4-l1
+brctl delbr s4-l2
+brctl delbr s4-l3
+brctl delbr s4-l4
+
+echo "Stop cleaning old configuration "
+sleep 1
+echo "Start creating bridges"
 
 brctl addbr mgmt
 brctl addbr spine1-int
@@ -104,26 +219,27 @@ echo 16384 > /sys/class/net/s4-l2/bridge/group_fwd_mask
 echo 16384 > /sys/class/net/s4-l3/bridge/group_fwd_mask
 echo 16384 > /sys/class/net/s4-l4/bridge/group_fwd_mask
 
-cp $VQFX_RE /var/lib/libvirt/images/spine1-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/spine1-pfe.qcow2
+echo "Stop creating bridges"
 
-cp $VQFX_RE  /var/lib/libvirt/images/spine2-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/spine2-pfe.qcow2
+echo "Copy images"
+cp -fn $VQFX_RE /var/lib/libvirt/images/spine1-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/spine1-pfe.qcow2
+cp -fn $VQFX_RE  /var/lib/libvirt/images/spine2-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/spine2-pfe.qcow2
+cp -fn $VQFX_RE  /var/lib/libvirt/images/leaf1-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf1-pfe.qcow2
+cp -fn $VQFX_RE /var/lib/libvirt/images/leaf2-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf2-pfe.qcow2
+cp -fn $VQFX_RE /var/lib/libvirt/images/leaf3-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf3-pfe.qcow2
+cp -fn $VQFX_RE /var/lib/libvirt/images/leaf4-re.qcow2
+cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf4-pfe.qcow2
+cp -fn $APSTRA_SRV /var/lib/libvirt/images/apstra-srv.qcow2
+cp -fn $APSTRA_ZTP /var/lib/libvirt/images/apstra-ztp.qcow2
 
-cp $VQFX_RE  /var/lib/libvirt/images/leaf1-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/leaf1-pfe.qcow2
-
-cp $VQFX_RE /var/lib/libvirt/images/leaf2-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/leaf2-pfe.qcow2
-
-cp $VQFX_RE /var/lib/libvirt/images/leaf3-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/leaf3-pfe.qcow2
-
-cp $VQFX_RE /var/lib/libvirt/images/leaf4-re.qcow2
-cp $VQFX_PFE /var/lib/libvirt/images/leaf4-pfe.qcow2
-
-cp $APSTRA_SRV /var/lib/libvirt/images/apstra-srv.qcow2
-cp $APSTRA_ZTP /var/lib/libvirt/images/apstra-ztp.qcow2
+echo "Copy images finished"
+sleep 1
+echo "Start install VMs"
 
 virt-install \
     --name spine1-re \
@@ -300,3 +416,6 @@ virt-install \
     --disk /var/lib/libvirt/images/aos-ztp.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
     --noautoconsole
+
+    echo "Stop install VMs"
+    echo "Done ..."
