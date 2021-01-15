@@ -38,8 +38,8 @@ virsh undefine aos-ztp
 virsh undefine aos-srv     
 
 ifconfig mgmt down
-ifconfig spine1-in down
-ifconfig spine2-in down
+ifconfig spine1-int down
+ifconfig spine2-int down
 ifconfig leaf1-int down
 ifconfig leaf2-int down
 ifconfig leaf3-int down
@@ -78,8 +78,8 @@ ifconfig s4-l3 down
 ifconfig s4-l4 down
 
 brctl delbr mgmt
-brctl delbr spine1-in
-brctl delbr spine2-in
+brctl delbr spine1-int
+brctl delbr spine2-int
 brctl delbr leaf1-int
 brctl delbr leaf2-int
 brctl delbr leaf3-int
@@ -234,8 +234,8 @@ cp -fn $VQFX_RE /var/lib/libvirt/images/leaf3-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf3-pfe.qcow2
 cp -fn $VQFX_RE /var/lib/libvirt/images/leaf4-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf4-pfe.qcow2
-cp -fn $APSTRA_SRV /var/lib/libvirt/images/apstra-srv.qcow2
-cp -fn $APSTRA_ZTP /var/lib/libvirt/images/apstra-ztp.qcow2
+cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
+cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
 
 echo "Copy images finished"
 sleep 1

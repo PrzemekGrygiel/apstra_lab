@@ -50,7 +50,7 @@ mkdir -p apstra_lab/2spine4leafs/images
 ```
 
 >>>
-Download images and copy to apstra_lab/2spines4leafs/images vqfx and Apstra aos images
+Download images and copy to apstra_lab/2spine4leaf/images vqfx and Apstra aos images
 in ./deploy.sh update versions
 ```
 VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
