@@ -46,7 +46,7 @@ reboot
 
 ```
 git clone https://github.com/PrzemekGrygiel/apstra_lab.git
-mkdir -p apstra_lab/2spines4leafs/images
+mkdir -p apstra_lab/2spine4leafs/images
 ```
 
 >>>
