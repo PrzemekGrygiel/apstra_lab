@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # images versions
-VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
-VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2
+VQFX_PFE=$PWD/images/vqfx-20.3R1-2019010209-pfe-qemu.qcow
+VQFX_RE=$PWD/images/vqfx-20.3R1.8-re-qemu-ztp-ready.qcow
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 
@@ -76,6 +76,21 @@ ifconfig s4-l1 down
 ifconfig s4-l2 down
 ifconfig s4-l3 down
 ifconfig s4-l4 down
+
+rm -rf /var/lib/libvirt/images/spine1-re.qcow2
+rm -rf /var/lib/libvirt/images/spine1-pfe.qcow2
+rm -rf /var/lib/libvirt/images/spine2-re.qcow2
+rm -rf /var/lib/libvirt/images/spine2-pfe.qcow2
+rm -rf /var/lib/libvirt/images/leaf1-re.qcow2
+rm -rf /var/lib/libvirt/images/leaf1-pfe.qcow2
+rm -rf /var/lib/libvirt/images/leaf2-re.qcow2
+rm -rf /var/lib/libvirt/images/leaf2-pfe.qcow2
+rm -rf /var/lib/libvirt/images/leaf3-re.qcow2
+rm -rf /var/lib/libvirt/images/leaf3-pfe.qcow2
+rm -rf /var/lib/libvirt/images/leaf4-re.qcow2
+rm -rf /var/lib/libvirt/images/leaf4-pfe.qcow2
+rm -rf  /var/lib/libvirt/images/aos-srv.qcow2
+rm -rf  /var/lib/libvirt/images/aos-ztp.qcow2
 
 brctl delbr mgmt
 brctl delbr spine1-int
@@ -234,8 +249,8 @@ cp -fn $VQFX_RE /var/lib/libvirt/images/leaf3-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf3-pfe.qcow2
 cp -fn $VQFX_RE /var/lib/libvirt/images/leaf4-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf4-pfe.qcow2
-cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
-cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
+#cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
+#cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
 
 echo "Copy images finished"
 sleep 1
@@ -243,8 +258,8 @@ echo "Start install VMs"
 
 virt-install \
     --name spine1-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/spine1-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -259,7 +274,7 @@ virt-install \
 virt-install \
     --name spine1-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/spine1-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -268,8 +283,8 @@ virt-install \
 
 virt-install \
     --name spine2-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/spine2-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -284,7 +299,7 @@ virt-install \
 virt-install \
     --name spine2-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/spine2-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -293,8 +308,8 @@ virt-install \
 
 virt-install \
     --name leaf1-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf1-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -311,7 +326,7 @@ virt-install \
 virt-install \
     --name leaf1-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf1-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -320,8 +335,8 @@ virt-install \
 
 virt-install \
     --name leaf2-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf2-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -338,7 +353,7 @@ virt-install \
 virt-install \
     --name leaf2-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf2-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -347,8 +362,8 @@ virt-install \
 
 virt-install \
     --name leaf3-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf3-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -365,7 +380,7 @@ virt-install \
 virt-install \
     --name leaf3-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf3-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -374,8 +389,8 @@ virt-install \
 
 virt-install \
     --name leaf4-re \
-    --memory 1024 \
-    --vcpus=1 \
+    --memory 2048 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf4-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
@@ -392,7 +407,7 @@ virt-install \
 virt-install \
     --name leaf4-pfe \
     --memory 2048 \
-    --vcpus=1 \
+    --vcpus=2 \
     --import \
     --disk /var/lib/libvirt/images/leaf4-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
