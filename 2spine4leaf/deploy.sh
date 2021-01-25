@@ -249,8 +249,8 @@ cp -fn $VQFX_RE /var/lib/libvirt/images/leaf3-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf3-pfe.qcow2
 cp -fn $VQFX_RE /var/lib/libvirt/images/leaf4-re.qcow2
 cp -fn $VQFX_PFE /var/lib/libvirt/images/leaf4-pfe.qcow2
-#cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
-#cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
+cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
+cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
 
 echo "Copy images finished"
 sleep 1
