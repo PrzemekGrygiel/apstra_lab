@@ -1,0 +1,15 @@
+--- ztp.py.orig	2020-12-23 19:20:16.413335570 +0000
++++ ztp.py	2021-01-25 12:20:52.204000000 +0000
+@@ -1666,8 +1666,11 @@
+         chassis_hardware = self._cli("show chassis hardware")
+         self.serial = chassis_hardware.get("chassis-inventory", [{}])[0].get(
+             "chassis", [{}])[0].get("serial-number", [{}])[0].get("data")
+-        self.model = chassis_hardware.get("chassis-inventory", [{}])[0].get(
+-            "chassis", [{}])[0].get("description", [{}])[0].get("data")
++        #self.model = chassis_hardware.get("chassis-inventory", [{}])[0].get(
++        #    "chassis", [{}])[0].get("description", [{}])[0].get("data")
++        system_information = self._cli("show system information")
++        self.model = system_information.get("system-information", [{}])[0].get(
++                     "hardware-model", [{}])[0].get("data")
+         self.os_version = self._cli("show system information").get(
+             "system-information", [{}])[0].get("os-version", [{}])[0].get("data")
