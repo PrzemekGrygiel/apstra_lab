@@ -65,6 +65,41 @@ APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 cd ..
 ./deploy.sh
 ```
+Once finish check if all VMs are running
+
+```
+buntu@5a4s1-node3:~$ virsh list
+ Id   Name         State
+----------------------------
+ 4    spine1-re    running
+ 5    spine1-pfe   running
+ 6    spine2-re    running
+ 7    spine2-pfe   running
+ 8    leaf1-re     running
+ 9    leaf1-pfe    running
+ 10   leaf2-re     running
+ 11   leaf2-pfe    running
+ 12   leaf3-re     running
+ 13   leaf3-pfe    running
+ 14   leaf4-re     running
+ 15   leaf4-pfe    running
+ 16   aos-srv      running
+ 17   aos-ztp      running
+
+```
+To access console of sitches run:
+
+```
+virsh console [name]-re 
+```
+To access AOS server console run
+```
+virsh console aos-srv
+```
+To access Arista ZTP server console run
+```
+virsh console aos-ztp
+```
 
 ### The procedure to fix vQFX for ZTP
 https://github.com/PrzemekGrygiel/apstra_lab/blob/main/vqfx_patch/README.md
