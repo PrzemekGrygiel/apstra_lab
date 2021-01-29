@@ -1,6 +1,21 @@
 **This is the procedure to force vQFX properly run with ZTP**
 
-Login into vQFX shell and follow steps:
+Login into vQFX shell 
+```
+virsh console [name of RE]
+```
+e.g.
+```
+buntu@5a4s1-node3:~$ virsh console leaf4-re
+Connected to domain leaf4-re
+Escape character is ^]
+
+
+{master:0}
+root@c=vqfx> 
+```
+
+and follow steps:
 
 1. Remove current existing factory default configuration file. I must be deleted not edited due it is symbolic link to Read Only volumen.
 
