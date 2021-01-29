@@ -28,7 +28,7 @@ Create new file (automatily with write permision)
 vi /etc/config/vqfx-10000-factory.conf 
 ```
 
-Copy paste folowing configuration into vqfx-10000-factory.conf file:
+2. Copy paste folowing configuration into vqfx-10000-factory.conf file:
 ```
 system {
     host-name vqfx-factory;
@@ -134,7 +134,7 @@ protocols {
 }
 ```
 
-Exit from shel and now you can zeroize the switch 
+3. Exit from shel and now you can zeroize the switch 
 
 ```
 request system zeroize
