@@ -12,7 +12,7 @@ Escape character is ^]
 
 
 {master:0}
-root@c=vqfx> 
+root@vqfx> 
 ```
 
 and follow steps:
