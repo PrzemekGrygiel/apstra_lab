@@ -50,11 +50,12 @@ mkdir -p apstra_lab/2spine4leafs/images
 ```
 
 >>>
-Download images and copy to apstra_lab/2spine4leaf/images vqfx and Apstra aos images
-in ./deploy.sh update versions
+Download images and copy to directory apstra_lab/[scenario]/images vQFX and Apstra AOS images
+
+Then edit deploy.sh to update versions
 ```
-VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
-VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2
+VQFX_PFE=$PWD/images/vqfx-20.3R1-2019010209-pfe-qemu.qcow2
+VQFX_RE=$PWD/images/vqfx-20.3R1.8-re-qemu.qcow2
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 ```
@@ -65,76 +66,6 @@ cd ..
 ./deploy.sh
 ```
 
-### 0 configuration required for Virtual QFXes
+### The procedure to fix vQFX for ZTP
+https://github.com/PrzemekGrygiel/apstra_lab/blob/main/vqfx_patch/README.md
 
-```
-system {
-    root-authentication {
-        encrypted-password "$6$L0OPCN3L$16YkZE7L0VDUdUEoJkNnhq2CE1/9AlLLETi.8aTmATd3Y1Wppp56bTr1LxRmFZG61lJTtvmVXypvJkABm96PI1"; ## SECRET-DATA
-    }
-    services {
-        ssh;
-        netconf {
-            ssh;
-        }
-    }
-    syslog {
-        user * {
-            any emergency;
-        }
-        file messages {
-            any notice;
-            authorization info;
-        }
-        file interactive-commands {
-            interactive-commands any;
-        }
-    }
-    extensions {
-        providers {
-            juniper {
-                license-type juniper deployment-scope commercial;
-            }
-            chef {
-                license-type juniper deployment-scope commercial;
-            }
-        }
-    }
-}
-chassis {
-    auto-image-upgrade;
-}
-interfaces {
-    em0 {
-        unit 0 {
-            family inet {
-                dhcp {
-                    vendor-id Juniper-qfx10002-72q;
-                }
-            }
-        }
-    }
-    em1 {
-        unit 0 {
-            family inet {
-                address 169.254.0.2/24;
-            }
-        }
-    }
-}
-forwarding-options {
-    storm-control-profiles default {
-        all;
-    }
-}
-protocols {
-    igmp-snooping {
-        vlan default;
-    }
-}
-vlans {
-    default {
-        vlan-id 1;
-    }
-}
-```
