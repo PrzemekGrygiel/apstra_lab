@@ -1,9 +1,19 @@
-Login into vQFX shell and follow the procedure:
+**This is the procedure to force vQFX properly run with ZTP**
 
-rm /etc/config/vqfx-10000-factory.conf /etc/config/vqfx-10000-factory.conf2
+Login into vQFX shell and follow steps:
+
+1. Remove current existing factory default configuration file. I must be deleted not edited due it is symbolic link to Read Only volumen.
+
+```
+rm /etc/config/vqfx-10000-factory.conf 
+```
+Create new file (automatily with write permision)
+
+```
 vi cp /etc/config/vqfx-10000-factory.conf 
+```
 
-Copy paste folowing configuration:
+Copy paste folowing configuration into vqfx-10000-factory.conf file:
 ```
 system {
     host-name vqfx-factory;
@@ -107,5 +117,11 @@ protocols {
         interface all;
     }
 }
+```
+
+Exit from shel and now you can zeroize the switch 
+
+```
+request system zeroize
 ```
 
