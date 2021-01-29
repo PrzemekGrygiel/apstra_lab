@@ -10,7 +10,7 @@ rm /etc/config/vqfx-10000-factory.conf
 Create new file (automatily with write permision)
 
 ```
-vi cp /etc/config/vqfx-10000-factory.conf 
+vi /etc/config/vqfx-10000-factory.conf 
 ```
 
 Copy paste folowing configuration into vqfx-10000-factory.conf file:
