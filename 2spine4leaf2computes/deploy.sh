@@ -272,17 +272,17 @@ genisoimage -output /var/lib/libvirt/images/compute2-config.iso -volid cidata -j
 virt-install 
     --import \
     --name compute1 \
-    --ram 8096\
-    --vcpus 4 
-    --disk  /var/lib/libvirt/images/compute1.qcow2,format=qcow2,bus=virtio 
-    --disk /var/lib/libvirt/images/compute1-config.iso,device=cdrom 
-    --network bridge=mgmt,model=virtio 
-    --network bridge=leaf1-0,model=virtio 
-    --network bridge=leaf2-0,model=virtio 
-    --os-type=linux 
-    --os-variant=rhel7 
-    --noautoconsole 
-    --noapic 
+    --ram 8096 \
+    --vcpus 4 \
+    --disk  /var/lib/libvirt/images/compute1.qcow2,format=qcow2,bus=virtio \
+    --disk /var/lib/libvirt/images/compute1-config.iso,device=cdrom \
+    --network bridge=mgmt,model=virtio \
+    --network bridge=leaf1-0,model=virtio \
+    --network bridge=leaf2-0,model=virtio \
+    --os-type=linux \
+    --os-variant=rhel7 \
+    --noautoconsole \
+    --noapic \
     --accelerate
 
 
@@ -290,17 +290,17 @@ virt-install
     --import \
     --name compute2 \
     --ram 8096\
-    --vcpus 4 
-    --disk  /var/lib/libvirt/images/compute2.qcow2,format=qcow2,bus=virtio 
-    --disk /var/lib/libvirt/images/compute2-config.iso,device=cdrom 
-    --network bridge=mgmt,model=virtio 
-    --network bridge=leaf1-0,model=virtio 
-    --network bridge=leaf2-0,model=virtio 
-    --os-type=linux 
-    --os-variant=rhel7 
-    --noautoconsole 
-    --noapic 
-    --accelerate
+    --vcpus 4 \
+    --disk  /var/lib/libvirt/images/compute2.qcow2,format=qcow2,bus=virtio \
+    --disk /var/lib/libvirt/images/compute2-config.iso,device=cdrom \
+    --network bridge=mgmt,model=virtio \
+    --network bridge=leaf1-0,model=virtio \
+    --network bridge=leaf2-0,model=virtio \
+    --os-type=linux \
+    --os-variant=rhel7 \
+    --noautoconsole \
+    --noapic \
+    --accelerate \
 
 virt-install 
     --import \
