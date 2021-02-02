@@ -1,0 +1,14 @@
+instance-id: compute1
+local-hostname: compute1
+network-interfaces: |
+  auto eth0
+  iface eth0 inet static
+  address 172.16.0.5
+  netmask 255.255.255.0
+  gateway 172.16.0.1
+  dns-nameservers 8.8.8.8
+
+  auto eth1
+  iface eth1 inet static
+  address 172.16.1.5
+  netmask 255.255.255.0

@@ -1,0 +1,25 @@
+#cloud-config
+
+ssh_pwauth: 1
+disable_root: 0
+
+chpasswd:
+  list: |
+    root:contrail123
+  expire: false
+
+#packages:
+#  - ntp
+#  - epel-release
+#  - net-tools
+#  - tcpdump
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+timezone: Europe/Warsaw
+#ntp:
+#  servers: ['ntp.juniper.net']
+
+output: {all: '| tee -a /var/log/cloud-init-output.log'}
