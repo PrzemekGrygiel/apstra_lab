@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash 
 
 # images versions
 VQFX_PFE=$PWD/images/vqfx-20.3R1-2019010209-pfe-qemu.qcow
