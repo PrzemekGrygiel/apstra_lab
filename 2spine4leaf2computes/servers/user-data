@@ -1,11 +1,16 @@
 #cloud-config
+users:
+  - name: root
+    ssh_authorized_keys:
+      - ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrMIR2QphPMBumOhGwFpw28HJ1vV/8l4R968zWv0dVblxw6K5eUeyVeX0oi3e5S7s9hV2J1DMBsfAR++xKSQmwEKV7/cMEp058zZzAkumFvTFwkqIOenwhRN8paviYgbyUcPikgHb0QFd9zkP8wKYfoHTKFMMwKIWCyNgE9+KK28V0Od5ApQKaWo46CTKxqST/3ot1f22MsFB+G+OINnCYf0TRR6qY0Z4uXBl86iDmZE5jdYkY24A/wzuFg8l9QUSyPijdLShM3SYNORT5Rn/h6blcHaOkKrej5Bqa+FYrqrTmTPSHKbzc3e+RD8AKTjV5S/lgYyE3VymExR+Xc/9SINTBw20y+T6+Jxd/HcNFloaIrt+y7OPupNqzztN55J8kMQjTAr2032TQdKtNXRaKCvqP6QVq9L3H5BGbRscf1hVF8Wccrrd65RJsOYjMtJEGyVsHpZwNW/SPc8pID41kH67zh7OBeej4gbilFZgkhgXMFByTTPZ6L/RRm0457I8= root@5a4s1-node2
+
 
 ssh_pwauth: 1
 disable_root: 0
 
 chpasswd:
   list: |
-    root:contrail123
+    root:Juniper
   expire: false
 
 #packages:
@@ -23,3 +28,5 @@ timezone: Europe/Warsaw
 #  servers: ['ntp.juniper.net']
 
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
+
+# vim:syntax=yaml
