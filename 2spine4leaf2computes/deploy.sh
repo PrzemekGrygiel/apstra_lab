@@ -266,8 +266,8 @@ qemu-img create -f qcow2 -o preallocation=metadata /var/lib/libvirt/images/compu
 qemu-img create -f qcow2 -o preallocation=metadata /var/lib/libvirt/images/compute2.qcow2 30G
 virt-resize --expand /dev/sda1 /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2 /var/lib/libvirt/images/compute1.qcow2
 virt-resize --expand /dev/sda1 /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2 /var/lib/libvirt/images/compute2.qcow2
-genisoimage -output /var/lib/libvirt/images/compute1-config.iso -volid cidata -joliet -r servers/user-data servers/meta-data-compute1
-genisoimage -output /var/lib/libvirt/images/compute2-config.iso -volid cidata -joliet -r servers/user-data servers/meta-data-compute2
+genisoimage -output /var/lib/libvirt/images/compute1-config.iso -volid cidata -joliet -r servers/compute1/user-data servers/compute1/meta-data
+genisoimage -output /var/lib/libvirt/images/compute2-config.iso -volid cidata -joliet -r servers/compute2/user-data servers/compute2/meta-data
 
 virt-install --import --name compute1 --ram 8096 --vcpus 4 --disk \
     /var/lib/libvirt/images/compute1.qcow2,format=qcow2,bus=virtio --disk /var/lib/libvirt/images/compute1-config.iso,device=cdrom --network \
