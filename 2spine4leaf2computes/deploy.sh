@@ -21,7 +21,9 @@ virsh destroy leaf3-pfe
 virsh destroy leaf4-re    
 virsh destroy leaf4-pfe   
 virsh destroy aos-ztp     
-virsh destroy aos-srv     
+virsh destroy aos-srv
+virsh destroy compute1
+virsh destroy compute2 
  
 virsh undefine spine1-re   
 virsh undefine spine1-pfe  
@@ -37,6 +39,8 @@ virsh undefine leaf4-re
 virsh undefine leaf4-pfe   
 virsh undefine aos-ztp     
 virsh undefine aos-srv     
+virsh undefine compute1
+virsh undefine compute1
 
 ifconfig mgmt down
 ifconfig spine1-int down
