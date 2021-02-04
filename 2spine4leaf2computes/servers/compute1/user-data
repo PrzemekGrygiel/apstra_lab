@@ -27,6 +27,11 @@ timezone: Europe/Warsaw
 #ntp:
 #  servers: ['ntp.juniper.net']
 
+runcmd:
+  -  modprobe bonding
+  -  ifup bond0
+  -  echo "alias bond0 bonding" > /etc/modprobe.d/bonding.conf
+
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
 
 # vim:syntax=yaml

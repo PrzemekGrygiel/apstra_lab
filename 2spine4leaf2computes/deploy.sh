@@ -40,7 +40,7 @@ virsh undefine leaf4-pfe
 virsh undefine aos-ztp     
 virsh undefine aos-srv     
 virsh undefine compute1
-virsh undefine compute1
+virsh undefine compute2
 
 ifconfig mgmt down
 ifconfig spine1-int down
