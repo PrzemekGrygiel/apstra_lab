@@ -1,5 +1,5 @@
-# This is scenario with 2 spine and 4 leaf switches organised in 2 racks.
-![](https://github.com/PrzemekGrygiel/apstra_lab/blob/main/diagrams/2s4l2c.png)
+# This is scenario with 2 spine and 4 leaf 2 border leaf switches organised in 3 racks.
+![](https://github.com/PrzemekGrygiel/apstra_lab/blob/main/diagrams/2s4l2c2b2g.png)
 
 Each rack has connected 1 server with preconfigured LACP bond (mode: 802.ad, lacp-rate: fast)
 
