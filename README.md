@@ -146,3 +146,13 @@ For windows/Putty users follow steps as here https://phoenixnap.com/kb/ssh-port-
 
 Then in a browser put
 https://127.0.0.1:8443
+
+
+### Provide VMs Internet access
+
+```
+  iptables -t nat -D POSTROUTING 1
+  echo 1 > /proc/sys/net/ipv4/ip_forward
+  #replace eno2 by yours interface with Internet access
+  iptables -t nat -A POSTROUTING -o eno2 -j MASQUERADE 
+```
