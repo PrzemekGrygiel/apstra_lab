@@ -64,23 +64,21 @@ reboot
 1) Download vQFX and Apstra AOS images (bash shell commands follow):
 
 ```
-mkdir -p ~/apstra_lab/2spine4leafs/images
-git clone https://github.com/PrzemekGrygiel/apstra_lab.git mkdir -p ~/apstra_lab/2spine4leafs/images
-
+git clone https://github.com/PrzemekGrygiel/apstra_lab.git 
+cd apstra_lab
 ```
-2) Edit ~/apstra_lab/2spine4leafs/images/deploy.sh to reflect current image versions
+2) Edit ~/apstra_lab/[scenario]/images to reflect current image versions
 
 The “images versions” section of the deploy.sh ~/apstra_lab/2spine4leafs/images/deploy.sh file must be edited to reflect the appropriate image versions.  For the purposes of this lab, that section of the file should be edited as follows, while leaving the rest of the script unchanged:
 
 ```
-VQFX_PFE=$PWD/images/vqfx-20.3R1-2019010209-pfe-qemu.qcow2
-VQFX_RE=$PWD/images/vqfx-20.3R1.8-re-qemu.qcow2
+VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
+VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2 
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 ```
 3) Mark the deploy script as executable and run it (bash shell commands follow):
 ```
-chmod +x ~/apstra_lab/2spine4leafs/images/deploy.sh
 ~/apstra_lab/2spine4leafs/images/deploy.sh
 ```
 
