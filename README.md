@@ -131,8 +131,7 @@ virsh console aos-ztp
 ```
 ### Patch Apstra ZTP for vQFX
 For poroper inventory of vQFX ZTP server python script need to be patched, plese folow procedure:
-https://github.com/PrzemekGrygiel/apstra_lab/tree/main/vqfx_patch
-
+https://github.com/PrzemekGrygiel/apstra_lab/tree/main/ztp_patch
 ### Configuring vQFX switches for ZTP
 The vQFX virtual switches must be modified if you wish to test ZTP with them. Details on this can be found here: https://github.com/PrzemekGrygiel/apstra_lab/blob/main/vqfx_patch/README.md
 
