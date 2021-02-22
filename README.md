@@ -138,3 +138,12 @@ https://github.com/PrzemekGrygiel/apstra_lab/tree/main/vqfx_patch
 ### Configuring vQFX switches for ZTP
 The vQFX virtual switches must be modified if you wish to test ZTP with them. Details on this can be found here: https://github.com/PrzemekGrygiel/apstra_lab/blob/main/vqfx_patch/README.md
 
+### Access to Apstra UI via SSL tunel 
+
+```
+ ssh -L 8443:172.16.0.200:443 root@10.87.3.2
+```
+Where 10.87.3.2 is IP of yours server
+
+Then in a browser put
+https://127.0.0.1:8443
