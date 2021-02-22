@@ -145,5 +145,7 @@ The vQFX virtual switches must be modified if you wish to test ZTP with them. De
 ```
 Where 10.87.3.2 is IP of yours server
 
+For windows/Putty users follow steps as here https://phoenixnap.com/kb/ssh-port-forwarding
+
 Then in a browser put
 https://127.0.0.1:8443
