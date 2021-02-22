@@ -21,7 +21,7 @@ cd /containers_data/tftp
 
 Alternativly to copy file using scp you can copy paste it
 ```
-vi /containers_data/tftp/ztp/patch
+vi /containers_data/tftp/ztp.patch
 ```
 and copy paste from 
 https://raw.githubusercontent.com/PrzemekGrygiel/apstra_lab/main/ztp_patch/ztp.patch
