@@ -13,7 +13,7 @@ scp ztp.patch admin@172.16.0.201:   #<- yours ZTP server IP here
 sudo su
 cp ztp.patch /containers_data/tftp
 ```
-Go to directory with ztp.py
+Login to Apstra ZTP server and go to directory with ztp.py
 
 ```
 cd /containers_data/tftp
