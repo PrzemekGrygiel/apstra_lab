@@ -1,4 +1,4 @@
-*Description*
+#Description
 
 This is the patch to fix switch inventory
 replacing "chassis-inventory" by "system-information"
