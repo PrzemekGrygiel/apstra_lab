@@ -20,6 +20,7 @@ Because this is a test lab, the following guide presumes that you are logged int
 1) System update and packages install (bash shell commands follow):
 ```
 yum -y update
+yum remove docker-ce
 yum -y install qemu-kvm qemu-img virt-manager libvirt libguestfs-tools libvirt-python \
 libvirt-client virt-install virt-viewer bridge-utils git ntp net-tools iptables iptables-services \
 epel-release byobu tmux vim jq
