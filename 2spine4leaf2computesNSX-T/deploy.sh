@@ -9,7 +9,7 @@ LINUX_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 VCENTER_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 ESXI_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 TRANSPORT_NODE_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
-
+NSXT_MANAGER_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 
 echo "Start cleaning old configuration "
 virsh destroy spine1-re   
@@ -144,6 +144,7 @@ rm -rf /var/lib/libvirt/images/bms2-config.iso
 rm -rf /var/lib/libvirt/images/esxi1.qcow2
 rm -rf /var/lib/libvirt/images/esxi2.qcow2
 rm -rf /var/lib/libvirt/images/transport-node.qcow2
+rm -rf /var/lib/libvirt/images/nsxt_manager.qcow2
 
 brctl delbr mgmt
 brctl delbr spine1-int
@@ -367,6 +368,7 @@ cp -fn $VCENTER_IMG /var/lib/libvirt/images/vcenter.qcow2
 cp -fn $ESXI_IMG /var/lib/libvirt/images/esxi1.qcow2
 cp -fn $ESXI_IMG /var/lib/libvirt/images/esxi2.qcow2
 cp -fn $TRANSPORT_NODE_IMG /var/lib/libvirt/images/transport-node.qcow2
+cp -fn $NSXT_MANAGER_IMG /var/lib/libvirt/images/nsxt_manager.qcow2
 
 echo "Copy images finished"
 sleep 1
@@ -571,6 +573,15 @@ virt-install \
     --vcpus=4 \
     --import \
     --disk /var/lib/libvirt/images/vcenter.qcow2,bus=ide,format=qcow2 \
+    --network bridge=mgmt,model=e1000 \
+    --noautoconsole
+
+virt-install \
+    --name nsxt-manager \
+    --memory 16384 \
+    --vcpus=4 \
+    --import \
+    --disk /var/lib/libvirt/images/nsxt_manager.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
     --noautoconsole
 
