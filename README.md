@@ -20,6 +20,7 @@ Because this is a test lab, the following guide presumes that you are logged int
 1) System update and packages install (bash shell commands follow):
 ```
 yum -y update
+yum remove docker-ce
 yum -y install qemu-kvm qemu-img virt-manager libvirt libguestfs-tools libvirt-python \
 libvirt-client virt-install virt-viewer bridge-utils git ntp net-tools iptables iptables-services \
 epel-release byobu tmux vim jq
@@ -64,23 +65,21 @@ reboot
 1) Download vQFX and Apstra AOS images (bash shell commands follow):
 
 ```
-mkdir -p ~/apstra_lab/2spine4leafs/images
-git clone https://github.com/PrzemekGrygiel/apstra_lab.git mkdir -p ~/apstra_lab/2spine4leafs/images
-
+git clone https://github.com/PrzemekGrygiel/apstra_lab.git 
+cd apstra_lab
 ```
-2) Edit ~/apstra_lab/2spine4leafs/images/deploy.sh to reflect current image versions
+2) Edit ~/apstra_lab/[scenario]/images to reflect current image versions
 
 The “images versions” section of the deploy.sh ~/apstra_lab/2spine4leafs/images/deploy.sh file must be edited to reflect the appropriate image versions.  For the purposes of this lab, that section of the file should be edited as follows, while leaving the rest of the script unchanged:
 
 ```
-VQFX_PFE=$PWD/images/vqfx-20.3R1-2019010209-pfe-qemu.qcow2
-VQFX_RE=$PWD/images/vqfx-20.3R1.8-re-qemu.qcow2
+VQFX_PFE=$PWD/images/vqfx-20.2R1-2019010209-pfe-qemu.qcow2
+VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2 
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 ```
 3) Mark the deploy script as executable and run it (bash shell commands follow):
 ```
-chmod +x ~/apstra_lab/2spine4leafs/images/deploy.sh
 ~/apstra_lab/2spine4leafs/images/deploy.sh
 ```
 
@@ -131,7 +130,30 @@ virsh console aos-srv
 ```
 virsh console aos-ztp
 ```
-
+### Patch Apstra ZTP for vQFX
+For poroper inventory of vQFX ZTP server python script need to be patched, plese folow procedure:
+https://github.com/PrzemekGrygiel/apstra_lab/tree/main/ztp_patch
 ### Configuring vQFX switches for ZTP
 The vQFX virtual switches must be modified if you wish to test ZTP with them. Details on this can be found here: https://github.com/PrzemekGrygiel/apstra_lab/blob/main/vqfx_patch/README.md
 
+### Access to Apstra UI via SSL tunel 
+
+```
+ ssh -L 8443:172.16.0.200:443 root@10.87.3.2
+```
+Where 10.87.3.2 is IP of yours server
+
+For windows/Putty users follow steps as here https://phoenixnap.com/kb/ssh-port-forwarding
+
+Then in a browser put
+https://127.0.0.1:8443
+
+
+### Provide VMs Internet access
+
+```
+  iptables -t nat -D POSTROUTING 1
+  echo 1 > /proc/sys/net/ipv4/ip_forward
+  #replace eno2 by yours interface with Internet access
+  iptables -t nat -A POSTROUTING -o eno2 -j MASQUERADE 
+```
