@@ -540,6 +540,60 @@ virt-install \
     --noautoconsole
 
 virt-install \
+    --name border-leaf1-re \
+    --memory 2048 \
+    --vcpus=2 \
+    --import \
+    --disk /var/lib/libvirt/images/border-leaf1-re.qcow2,bus=ide,format=qcow2 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=border-leaf1-int,model=e1000 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=s1-b1,model=e1000 \
+    --network bridge=s2-b1,model=e1000 \
+    --network bridge=border-leaf1-0,model=e1000 \
+    --network bridge=border-leaf1-1,model=e1000 \
+    --network bridge=border-leaf1-2,model=e1000 \
+    --network bridge=border-leaf1-3,model=e1000 \
+    --noautoconsole
+
+virt-install \
+    --name border-leaf2-pfe \
+    --memory 2048 \
+    --vcpus=2 \
+    --import \
+    --disk /var/lib/libvirt/images/border-leaf2-pfe.qcow2,bus=ide,format=qcow2 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=border-leaf2-int,model=e1000 \
+    --noautoconsole
+
+virt-install \
+    --name border-leaf2-re \
+    --memory 2048 \
+    --vcpus=2 \
+    --import \
+    --disk /var/lib/libvirt/images/border-leaf2-re.qcow2,bus=ide,format=qcow2 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=border-leaf2-int,model=e1000 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=s1-b2,model=e1000 \
+    --network bridge=s2-b2,model=e1000 \
+    --network bridge=border-leaf2-0,model=e1000 \
+    --network bridge=border-leaf2-1,model=e1000 \
+    --network bridge=border-leaf2-2,model=e1000 \
+    --network bridge=border-leaf2-3,model=e1000 \
+    --noautoconsole
+
+virt-install \
+    --name border-leaf1-pfe \
+    --memory 2048 \
+    --vcpus=2 \
+    --import \
+    --disk /var/lib/libvirt/images/border-leaf1-pfe.qcow2,bus=ide,format=qcow2 \
+    --network bridge=mgmt,model=e1000 \
+    --network bridge=border-leaf1-int,model=e1000 \
+    --noautoconsole
+
+virt-install \
     --name leaf4-pfe \
     --memory 2048 \
     --vcpus=2 \
