@@ -36,6 +36,7 @@ virsh destroy bms1
 virsh destroy bms2 
 virsh destroy esxi1
 virsh destroy esxi2
+virsh destroy nsxt-manager 
 virsh destroy transport-node
 
 virsh undefine spine1-re   
@@ -61,6 +62,7 @@ virsh undefine bms1
 virsh undefine bms2 
 virsh undefine esxi1
 virsh undefine esxi2
+virsh undefine nsxt-manager 
 virsh undefine transport-node
 
 ifconfig mgmt down
