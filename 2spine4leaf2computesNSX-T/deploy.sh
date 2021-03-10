@@ -6,8 +6,9 @@ VQFX_RE=$PWD/images/vqfx-20.3R1.8-re-qemu-ztp-ready.qcow
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 LINUX_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
-VCENTER_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
-ESXI_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
+VCENTER_IMG=$PWD/images/vcenter.qcow2
+ESXI_IMG=$PWD/images/esxi.qcow2
+#TBD
 TRANSPORT_NODE_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 NSXT_MANAGER_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 
@@ -566,57 +567,31 @@ virt-install \
     --network bridge=mgmt,model=e1000 \
     --noautoconsole
 
+virt-install --import --name vcenter --ram 16384 --vcpus 4 --disk \
+    /var/lib/libvirt/images/vcenter.qcow2,format=qcow2,bus=virtio --network \
+    bridge=mgmt,model=virtio --os-type=linux  --noautoconsole --noapic \
+    --accelerate
 
-virt-install \
-    --name vcenter \
-    --memory 16384 \
-    --vcpus=4 \
-    --import \
-    --disk /var/lib/libvirt/images/vcenter.qcow2,bus=ide,format=qcow2 \
-    --network bridge=mgmt,model=e1000 \
-    --noautoconsole
 
-virt-install \
-    --name nsxt-manager \
-    --memory 16384 \
-    --vcpus=4 \
-    --import \
-    --disk /var/lib/libvirt/images/nsxt_manager.qcow2,bus=ide,format=qcow2 \
-    --network bridge=mgmt,model=e1000 \
-    --noautoconsole
+virt-install --import --name nsxt-manager --ram 16384 --vcpus 4 --disk \
+    /var/lib/libvirt/images/nsxt_manager.qcow2,format=qcow2,bus=virtio --network \
+    bridge=mgmt,model=virtio --os-type=linux  --noautoconsole --noapic \
+    --accelerate
 
-virt-install \
-    --name esxi1 \
-    --memory 16384 \
-    --vcpus=4 \
-    --import \
-    --disk /var/lib/libvirt/images/esxi1.qcow2,bus=ide,format=qcow2 \
-    --network bridge=mgmt,model=e1000 \
-    --network bridge=leaf1-1,model=e1000 \ 
-    --network bridge=leaf2-1,model=e1000 \
-    --noautoconsole
+virt-install --import --name esxi1 --ram 16384 --vcpus 4 --disk \
+    /var/lib/libvirt/images/esxi1.qcow2,format=qcow2,bus=virtio --network \
+    bridge=mgmt,model=virtio --network bridge=leaf1-1,model=virtio --network bridge=leaf2-1,model=virtio --os-type=linux  --noautoconsole --noapic \
+    --accelerate
 
-virt-install \
-    --name esxi2 \
-    --memory 16384 \
-    --vcpus=4 \
-    --import \
-    --disk /var/lib/libvirt/images/esxi2.qcow2,bus=ide,format=qcow2 \
-    --network bridge=mgmt,model=e1000 \
-    --network bridge=leaf3-1,model=e1000 \ 
-    --network bridge=leaf4-1,model=e1000 \
-    --noautoconsole
+virt-install --import --name esxi2 --ram 16384 --vcpus 4 --disk \
+    /var/lib/libvirt/images/esxi2.qcow2,format=qcow2,bus=virtio --network \
+    bridge=mgmt,model=virtio --network bridge=leaf3-1,model=virtio --network bridge=leaf4-1,model=virtio --os-type=linux  --noautoconsole --noapic \
+    --accelerate
 
-virt-install \
-    --name transport-node \
-    --memory 16384 \
-    --vcpus=4 \
-    --import \
-    --disk /var/lib/libvirt/images/transport-node.qcow2,bus=ide,format=qcow2 \
-    --network bridge=mgmt,model=e1000 \
-    --network bridge=border-leaf1-0,model=e1000 \ 
-    --network bridge=border-leaf2-0,model=e1000 \
-    --noautoconsole
+virt-install --import --name transport-node --ram 16384 --vcpus 4 --disk \
+    /var/lib/libvirt/images/transport-node.qcow2,format=qcow2,bus=virtio --network \
+    bridge=mgmt,model=virtio --network bridge=border-leaf1-0,model=virtio --network bridge=border-leaf2-0,model=virtio --os-type=linux  --noautoconsole --noapic \
+    --accelerate
 
 
     echo "Stop install VMs"
