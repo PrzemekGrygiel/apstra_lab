@@ -7,9 +7,13 @@ APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 LINUX_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 VCENTER_IMG=$PWD/images/vcenter.qcow2
-ESXI_IMG=$PWD/images/esxi.qcow2
+ESXI1_IMG=$PWD/images/esxi1.qcow2
+ESXI2_IMG=$PWD/images/esxi2.qcow2
 #TBD
-TRANSPORT_NODE_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
+# For the Transport Nodes, there is no special image
+# The same image as ESXi has to be used and then the 
+# nodes have to be configured with a transport-node profile
+#TRANSPORT_NODE_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 NSXT_MANAGER_IMG=$PWD/images/CentOS-7-x86_64-GenericCloud.qcow2
 
 echo "Start cleaning old configuration "
@@ -72,8 +76,8 @@ ifconfig leaf1-int down
 ifconfig leaf2-int down
 ifconfig leaf3-int down
 ifconfig leaf4-int down
-ifconfig border-leaf1-int down
-ifconfig border-leaf2-int down
+ifconfig bl1-int down
+ifconfig bl2-int down
 ifconfig leaf1-0 down
 ifconfig leaf1-1 down
 ifconfig leaf1-2 down
@@ -146,6 +150,7 @@ rm -rf /var/lib/libvirt/images/bms1-config.iso
 rm -rf /var/lib/libvirt/images/bms2-config.iso 
 rm -rf /var/lib/libvirt/images/esxi1.qcow2
 rm -rf /var/lib/libvirt/images/esxi2.qcow2
+rm -rf /var/lib/libvirt/images/esxi3.qcow2
 rm -rf /var/lib/libvirt/images/transport-node.qcow2
 rm -rf /var/lib/libvirt/images/nsxt_manager.qcow2
 
@@ -156,8 +161,8 @@ brctl delbr leaf1-int
 brctl delbr leaf2-int
 brctl delbr leaf3-int
 brctl delbr leaf4-int
-brctl delbr border-leaf1-int down
-brctl delbr border-leaf2-int down
+brctl delbr bl1-int down
+brctl delbr bl2-int down
 brctl delbr leaf1-0
 brctl delbr leaf1-1
 brctl delbr leaf1-2
@@ -214,8 +219,8 @@ brctl addbr leaf1-int
 brctl addbr leaf2-int
 brctl addbr leaf3-int
 brctl addbr leaf4-int
-brctl addbr border-leaf1-int 
-brctl addbr border-leaf2-int 
+brctl addbr bl1-int 
+brctl addbr bl2-int 
 brctl addbr leaf1-0
 brctl addbr leaf1-1
 brctl addbr leaf1-2
@@ -269,8 +274,8 @@ ifconfig leaf1-int up
 ifconfig leaf2-int up
 ifconfig leaf3-int up
 ifconfig leaf4-int up
-ifconfig border-leaf1-int up
-ifconfig border-leaf2-int up
+ifconfig bl1-int up
+ifconfig bl2-int up
 ifconfig leaf1-0 up
 ifconfig leaf1-1 up
 ifconfig leaf1-2 up
@@ -368,9 +373,10 @@ cp -fn $APSTRA_SRV /var/lib/libvirt/images/aos-srv.qcow2
 cp -fn $APSTRA_ZTP /var/lib/libvirt/images/aos-ztp.qcow2
 cp -fn $LINUX_IMG /var/lib/libvirt/images
 cp -fn $VCENTER_IMG /var/lib/libvirt/images/vcenter.qcow2
-cp -fn $ESXI_IMG /var/lib/libvirt/images/esxi1.qcow2
-cp -fn $ESXI_IMG /var/lib/libvirt/images/esxi2.qcow2
-cp -fn $TRANSPORT_NODE_IMG /var/lib/libvirt/images/transport-node.qcow2
+cp -fn $ESXI1_IMG /var/lib/libvirt/images/esxi1.qcow2
+cp -fn $ESXI2_IMG /var/lib/libvirt/images/esxi2.qcow2
+cp -fn $ESXI1_IMG /var/lib/libvirt/images/esxi3.qcow2
+#cp -fn $TRANSPORT_NODE_IMG /var/lib/libvirt/images/transport-node.qcow2
 cp -fn $NSXT_MANAGER_IMG /var/lib/libvirt/images/nsxt_manager.qcow2
 
 echo "Copy images finished"
@@ -380,8 +386,8 @@ qemu-img create -f qcow2 -o preallocation=metadata /var/lib/libvirt/images/bms1.
 qemu-img create -f qcow2 -o preallocation=metadata /var/lib/libvirt/images/bms2.qcow2 30G
 virt-resize --expand /dev/sda1 /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2 /var/lib/libvirt/images/bms1.qcow2
 virt-resize --expand /dev/sda1 /var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2 /var/lib/libvirt/images/bms2.qcow2
-genisoimage -output /var/lib/libvirt/images/bms1-config.iso -volid cidata -joliet -r servers/bms1/user-data servers/bms1/meta-data servers/bms1/network-config
-genisoimage -output /var/lib/libvirt/images/bms2-config.iso -volid cidata -joliet -r servers/bms2/user-data servers/bms2/meta-data servers/bms2/network-config
+genisoimage -output /var/lib/libvirt/images/bms1-config.iso -volid cidata -joliet -r servers/compute1/user-data servers/compute1/meta-data servers/compute1/network-config
+genisoimage -output /var/lib/libvirt/images/bms2-config.iso -volid cidata -joliet -r servers/compute2/user-data servers/compute2/meta-data servers/compute2/network-config
 
 virt-install --import --name bms1 --ram 8096 --vcpus 4 --disk \
     /var/lib/libvirt/images/bms1.qcow2,format=qcow2,bus=virtio --disk /var/lib/libvirt/images/bms1-config.iso,device=cdrom --network \
@@ -548,7 +554,7 @@ virt-install \
     --import \
     --disk /var/lib/libvirt/images/border-leaf1-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
-    --network bridge=border-leaf1-int,model=e1000 \
+    --network bridge=bl1-int,model=e1000 \
     --network bridge=mgmt,model=e1000 \
     --network bridge=s1-b1,model=e1000 \
     --network bridge=s2-b1,model=e1000 \
@@ -565,7 +571,7 @@ virt-install \
     --import \
     --disk /var/lib/libvirt/images/border-leaf2-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
-    --network bridge=border-leaf2-int,model=e1000 \
+    --network bridge=bl2-int,model=e1000 \
     --noautoconsole
 
 virt-install \
@@ -575,7 +581,7 @@ virt-install \
     --import \
     --disk /var/lib/libvirt/images/border-leaf2-re.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
-    --network bridge=border-leaf2-int,model=e1000 \
+    --network bridge=bl2-int,model=e1000 \
     --network bridge=mgmt,model=e1000 \
     --network bridge=s1-b2,model=e1000 \
     --network bridge=s2-b2,model=e1000 \
@@ -592,7 +598,7 @@ virt-install \
     --import \
     --disk /var/lib/libvirt/images/border-leaf1-pfe.qcow2,bus=ide,format=qcow2 \
     --network bridge=mgmt,model=e1000 \
-    --network bridge=border-leaf1-int,model=e1000 \
+    --network bridge=bl1-int,model=e1000 \
     --noautoconsole
 
 virt-install \
@@ -645,7 +651,7 @@ virt-install --import --name esxi2 --ram 16384 --vcpus 4 --disk \
     --accelerate
 
 virt-install --import --name transport-node --ram 16384 --vcpus 4 --disk \
-    /var/lib/libvirt/images/transport-node.qcow2,format=qcow2,bus=virtio --network \
+    /var/lib/libvirt/images/esxi3.qcow2,format=qcow2,bus=virtio --network \
     bridge=mgmt,model=virtio --network bridge=border-leaf1-0,model=virtio --network bridge=border-leaf2-0,model=virtio --os-type=linux  --noautoconsole --noapic \
     --accelerate
 
