@@ -28,7 +28,7 @@ epel-release byobu tmux vim jq
 
 2) Update “server” section of the file /etc/ntp.conf to include use the NTP server ntp.juniper.net:
 
-By default, the ntp.conf file contains four public server entries. For the purposes of this lab, these must be commented out by adding a hash sigh (#) in front of each entry.  An entry for ntp.juniper.net should then be added, leaving the server section of the file looking as follows:
+By default, the ntp.conf file contains four public server entries. For the purposes of this lab, these must be commented out by adding a hash sign (#) in front of each entry.  An entry for ntp.juniper.net should then be added, leaving the server section of the file looking as follows:
 ```
 #server 0.rhel.pool.ntp.org iburst
 #server 1.rhel.pool.ntp.org iburst
@@ -64,11 +64,26 @@ reboot
 ### Deploy Apstra lab
 1) Download vQFX and Apstra AOS images (bash shell commands follow):
 
+This lab uses virtual machine versions of:
+* Juniper’s QFX switches (vQFX)
+* Apstra AOS Server
+* Apstra ZTP Server  
+The latest versions these VMs can be found at https://support.juniper.net/support/downloads/.  This website requires user interaction to download the VM, and the associated image names will change as versions increment. Note: we are working on changing this link to a lab-specific download link, but this is not currently available.
+
+This guide presumes that you are downloading qcow2 images directly into the home folder of the root user, and that there are no other qcow2 images there.
+2) Download Apsrta lab scripts
+
 ```
 git clone https://github.com/PrzemekGrygiel/apstra_lab.git 
 cd apstra_lab
 ```
-2) Edit ~/apstra_lab/[scenario]/images to reflect current image versions
+3)Move downloaded vQFX, AOS Server, and ZTP server images (bash shell commands follow)
+For the purposes of this script, the vQFX, AOS Server, and ZTP server images need to be moved into the ~/apstra_lab/2spine4leafs/images directory.
+
+```
+mv ~/*.qcow2 ~/apstra_lab/2spine4leafs/images
+```
+4) Edit ~/apstra_lab/[scenario]/images to reflect current image versions
 
 The “images versions” section of the deploy.sh ~/apstra_lab/2spine4leafs/images/deploy.sh file must be edited to reflect the appropriate image versions.  For the purposes of this lab, that section of the file should be edited as follows, while leaving the rest of the script unchanged:
 
@@ -78,7 +93,7 @@ VQFX_RE=$PWD/images/vqfx-20.2R1.10-re-qemu.qcow2
 APSTRA_SRV=$PWD/images/aos_server_3.3.0c-26.qcow2
 APSTRA_ZTP=$PWD/images/apstra-ztp-2.0.0-60.qcow2
 ```
-3) Mark the deploy script as executable and run it (bash shell commands follow):
+4) Run the depoy.sh script (bash shell commands follow):
 ```
 ~/apstra_lab/2spine4leafs/images/deploy.sh
 ```
